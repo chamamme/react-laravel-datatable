@@ -1,0 +1,32 @@
+{
+  "name": "react-laravel-datatable",
+  "version": "1.0.0",
+  "description": "A simple but flexible react datatable library built to support Laravel's pagination out of the box.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mastys100/react-laravel-datable.git"
+  },
+  "keywords": [
+    "react-datatable",
+    "react",
+    "datatable",
+    "laravel-datatable",
+    "react-table",
+    "laravel-table"
+  ],
+  "author": "Chamamme Andrew",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mastys100/react-laravel-datable/issues"
+  },
+  "homepage": "https://github.com/mastys100/react-laravel-datable#readme",
+  "dependencies": {
+    "react": "16.9.0",
+    "prop-types":"15.7.2",
+    "axios": "0.19.0"
+  }
+}
