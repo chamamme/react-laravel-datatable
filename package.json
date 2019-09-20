@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/mastys100/react-laravel-datable.git"
+    "url": "git+https://github.com/mastys100/react-laravel-datatable.git"
   },
   "keywords": [
     "react-datatable",
@@ -21,9 +21,9 @@
   "author": "Chamamme Andrew",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/mastys100/react-laravel-datable/issues"
+    "url": "https://github.com/mastys100/react-laravel-datatable/issues"
   },
-  "homepage": "https://github.com/mastys100/react-laravel-datable#readme",
+  "homepage": "https://github.com/mastys100/react-laravel-datatable#readme",
   "dependencies": {
     "react": "16.9.0",
     "prop-types":"15.7.2",
