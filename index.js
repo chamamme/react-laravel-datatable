@@ -1999,6 +1999,14 @@ function (_Component) {
 
     _defineProperty(_assertThisInitialized(_this), "columnNames", []);
 
+    if (props.columns == undefined) {
+      throw "columns prop for Datatable  is required and must be an array of objects. eg [{title:string,name:string}]";
+    }
+
+    if (props.url == undefined) {
+      throw "url prop for Datatable  is required";
+    }
+
     _this.columnNames = props.columns.map(function (column) {
       return column.name;
     });
@@ -2269,11 +2277,11 @@ function (_Component) {
   return DataTable;
 }(_react.Component);
 
-DataTable.prototype({
+DataTable.propTypes = {
   url: _propTypes["default"].string.isRequired,
-  columns: _propTypes["default"].object.isRequired,
+  columns: _propTypes["default"].array.isRequired,
   actionRender: _propTypes["default"].func
-});
+};
 var _default = DataTable;
 exports["default"] = _default;
 

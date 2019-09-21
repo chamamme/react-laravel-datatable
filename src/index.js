@@ -8,6 +8,14 @@ class DataTable extends Component {
     constructor(props) {
         super(props);
 
+        if(props.columns == undefined){
+            throw "columns prop for Datatable  is required and must be an array of objects. eg [{title:string,name:string}]"
+        }
+
+        if(props.url == undefined){
+            throw "url prop for Datatable  is required"
+        }
+
         this.columnNames = props.columns.map(column => column.name);
         this.state = {
             entities: {
@@ -198,10 +206,10 @@ class DataTable extends Component {
     }
 }
 
-DataTable.prototype({
+DataTable.propTypes={
     url : PropTypes.string.isRequired,
-    columns : PropTypes.object.isRequired,
+    columns : PropTypes.array.isRequired,
     actionRender: PropTypes.func
-})
+}
 export default  DataTable
 
