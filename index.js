@@ -2024,12 +2024,13 @@ function (_Component) {
     _defineProperty(_assertThisInitialized(_this), "columnNames", []);
 
     _defineProperty(_assertThisInitialized(_this), "searchField", function () {
-      return _react["default"].createElement("form", null, _react["default"].createElement("div", {
+      return _react["default"].createElement("form", {
+        onSubmit: _this.searchFormSubmit
+      }, _react["default"].createElement("div", {
         className: "rldt-search-container"
       }, _react["default"].createElement("input", {
         type: 'text',
         placeholder: "enter search term",
-        onSubmit: _this.searcButtonOnClick,
         onChange: _this.searcFieldOnChange
       }), _react["default"].createElement("button", {
         type: "button",
@@ -2038,6 +2039,12 @@ function (_Component) {
     });
 
     _defineProperty(_assertThisInitialized(_this), "searcButtonOnClick", function (e) {
+      _this.fetchEntities();
+    });
+
+    _defineProperty(_assertThisInitialized(_this), "searchFormSubmit", function (e) {
+      e.preventDefault();
+
       _this.fetchEntities();
     });
 

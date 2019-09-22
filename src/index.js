@@ -168,9 +168,9 @@ class DataTable extends Component {
 
     searchField = ()=>{
         return (
-            <form>
+            <form onSubmit={this.searchFormSubmit}>
                 <div className="rldt-search-container">
-                    <input type='text' placeholder="enter search term"  onSubmit={this.searcButtonOnClick} onChange={this.searcFieldOnChange} />
+                    <input type='text' placeholder="enter search term"  onChange={this.searcFieldOnChange} />
                     <button type="button" onClick={this.searcButtonOnClick}> Go </button>
                 </div> 
             </form>
@@ -180,10 +180,13 @@ class DataTable extends Component {
         this.fetchEntities();
 
     }
+    searchFormSubmit = (e)=>{
+        e.preventDefault();
+        this.fetchEntities();
+    }
 
     searcFieldOnChange = (e)=>{
         const value = e.target.value;
-        console.log("search field ", value);
         this.setState({search_term: value});
     }
 
