@@ -2000,7 +2000,7 @@ function (_Component) {
     _defineProperty(_assertThisInitialized(_this), "columnNames", []);
 
     if (props.columns == undefined) {
-      throw "columns prop for Datatable  is required and must be an array of objects. eg [{title:string,name:string}]";
+      throw "columns prop for Datatable  is required and must be an array of objects. Example\n            [\n                { id: name , label: User Name}\n            ]";
     }
 
     if (props.url == undefined) {
@@ -2008,7 +2008,7 @@ function (_Component) {
     }
 
     _this.columnNames = props.columns.map(function (column) {
-      return column.name;
+      return column.id;
     });
     _this.state = {
       entities: {
@@ -2022,7 +2022,7 @@ function (_Component) {
       },
       first_page: 1,
       current_page: 1,
-      sorted_column: _this.props.columns[0].name,
+      sorted_column: _this.props.columns[0].id,
       offset: 4,
       order: 'asc'
     };
@@ -2037,11 +2037,15 @@ function (_Component) {
       var fetchUrl = "".concat(this.props.url, "?page=").concat(this.state.current_page, "&column=").concat(this.state.sorted_column, "&order=").concat(this.state.order, "&per_page=").concat(this.state.entities.per_page);
 
       _axios["default"].get(fetchUrl).then(function (response) {
-        console.log(response.data.data);
+        if (response.data.data == undefined) {
+          throw "Invalid response. Please make sure your response body contains a data key and is a laravel pagination object.";
+        }
 
         _this2.setState({
           entities: response.data.data
         });
+
+        console.log("respsda", _this2.state);
       })["catch"](function (e) {
         console.error(e);
       });
@@ -2120,14 +2124,14 @@ function (_Component) {
       var _columns = this.props.columns.map(function (column) {
         return _react["default"].createElement("th", {
           className: "table-head",
-          key: column.name,
+          key: column.id,
           onClick: function onClick() {
-            return _this5.sortByColumn(column.name);
+            return _this5.sortByColumn(column.id);
           }
-        }, _this5.columnHead(column.title), column.name === _this5.state.sorted_column && icon);
+        }, _this5.columnHead(column.label), column.id === _this5.state.sorted_column && icon);
       });
 
-      if (this.props.actionRender) {
+      if (this.props.actions) {
         var _name = "actions";
 
         var _actionCol = _react["default"].createElement("th", {
@@ -2150,7 +2154,7 @@ function (_Component) {
     key: "buildColumnRender",
     value: function buildColumnRender(key, entity) {
       var found = this.props.columns.find(function (el) {
-        return el.name == key;
+        return el.id == key;
       });
       return found.render ? found.render.bind(this, entity) : '';
     }
@@ -2159,35 +2163,26 @@ function (_Component) {
     value: function entityList() {
       var _this6 = this;
 
-      if (this.state.entities.data.length) {
+      if (this.state.entities.data.length > 0) {
+        //Not empty
+        var count = 0;
         return this.state.entities.data.map(function (entity) {
+          count += 1;
           return _react["default"].createElement("tr", {
-            key: entity.id
-          }, Object.keys(entity).map(function (key) {
-            var colIndex = _this6.columnNames.indexOf(key);
-
-            var hasCallback = false;
-            var _columnObj = _this6.props.columns[colIndex]; // i used the same colIndex here because column names have the arrangement as props.columns
-
-            if (_columnObj) {
-              hasCallback = _columnObj.onClick ? true : false;
+            key: count
+          }, _this6.props.columns.map(function (col) {
+            //Loop through each column object
+            if (col.onClick != undefined) {
+              // has an onClick callback function
+              return _react["default"].createElement("td", {
+                onClick: function onClick(entity) {
+                  return col.onClick(entity);
+                }
+              }, entity[col.id]);
+            } else {
+              return _react["default"].createElement("td", null, " ", entity[col.id]);
             }
-
-            if (colIndex != '-1') {
-              if (hasCallback == true) {
-                return _react["default"].createElement("td", {
-                  key: key,
-                  onClick: function onClick(entity) {
-                    return _columnObj.onClick(entity);
-                  }
-                }, entity[key]);
-              } else {
-                return _react["default"].createElement("td", {
-                  key: key
-                }, " ", entity[key], " ");
-              }
-            }
-          }), _this6.props.actionRender ? _react["default"].createElement("td", null, _this6.props.actionRender(entity)) : null);
+          }), _this6.props.actions ? _react["default"].createElement("td", null, _this6.props.actions(entity)) : null);
         });
       } else {
         return _react["default"].createElement("tr", null, _react["default"].createElement("td", {
@@ -2270,7 +2265,7 @@ function (_Component) {
         style: {
           marginTop: '8px'
         }
-      }, " \xA0 ", _react["default"].createElement("i", null, "Displaying ", this.state.entities.data.length, " of ", this.state.entities.total, " entries.")))));
+      }, " \xA0 ", _react["default"].createElement("i", null, " Showing ", this.state.entities.data.length, " of ", this.state.entities.total, " records.")))));
     }
   }]);
 
@@ -2280,7 +2275,7 @@ function (_Component) {
 DataTable.propTypes = {
   url: _propTypes["default"].string.isRequired,
   columns: _propTypes["default"].array.isRequired,
-  actionRender: _propTypes["default"].func
+  actions: _propTypes["default"].func
 };
 var _default = DataTable;
 exports["default"] = _default;

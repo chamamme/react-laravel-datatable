@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import  PropTypes from "prop-types";
+import PropTypes from "prop-types";
 
 
 class DataTable extends Component {
@@ -8,15 +8,18 @@ class DataTable extends Component {
     constructor(props) {
         super(props);
 
-        if(props.columns == undefined){
-            throw "columns prop for Datatable  is required and must be an array of objects. eg [{title:string,name:string}]"
+        if (props.columns == undefined) {
+            throw `columns prop for Datatable  is required and must be an array of objects. Example
+            [
+                { id: name , label: User Name}
+            ]`
         }
 
-        if(props.url == undefined){
+        if (props.url == undefined) {
             throw "url prop for Datatable  is required"
         }
 
-        this.columnNames = props.columns.map(column => column.name);
+        this.columnNames = props.columns.map(column => column.id);
         this.state = {
             entities: {
                 data: [],
@@ -29,7 +32,7 @@ class DataTable extends Component {
             },
             first_page: 1,
             current_page: 1,
-            sorted_column: this.props.columns[0].name,
+            sorted_column: this.props.columns[0].id,
             offset: 4,
             order: 'asc',
         };
@@ -39,8 +42,11 @@ class DataTable extends Component {
         let fetchUrl = `${this.props.url}?page=${this.state.current_page}&column=${this.state.sorted_column}&order=${this.state.order}&per_page=${this.state.entities.per_page}`;
         axios.get(fetchUrl)
             .then(response => {
-                console.log(response.data.data);
+                if (response.data.data == undefined) {
+                    throw "Invalid response. Please make sure your response body contains a data key and is a laravel pagination object."
+                }
                 this.setState({ entities: response.data.data });
+                console.log("respsda", this.state);
             })
             .catch(e => {
                 console.error(e);
@@ -86,13 +92,13 @@ class DataTable extends Component {
             icon = <i className="fas fa-arrow-down"></i>;
         }
         let _columns = this.props.columns.map(column => {
-            return <th className="table-head" key={column.name} onClick={() => this.sortByColumn(column.name)}>
-                {this.columnHead(column.title)}
-                {column.name === this.state.sorted_column && icon}
+            return <th className="table-head" key={column.id} onClick={() => this.sortByColumn(column.id)}>
+                {this.columnHead(column.label)}
+                {column.id === this.state.sorted_column && icon}
             </th>
         });
 
-        if (this.props.actionRender) {
+        if (this.props.actions) {
             let _name = "actions";
 
             let _actionCol = <th className="table-head" key={_name} onClick={() => this.sortByColumn(_name)}>
@@ -109,41 +115,33 @@ class DataTable extends Component {
     }
 
     buildColumnRender(key, entity) {
-        var found = this.props.columns.find((el) => el.name == key);
+        var found = this.props.columns.find((el) => el.id == key);
         return (found.render ? found.render.bind(this, entity) : '')
     }
 
     entityList() {
-        if (this.state.entities.data.length) {
+        if (this.state.entities.data.length > 0) { //Not empty
+            var count = 0;
             return this.state.entities.data.map(entity => {
+                count += 1;
 
-                return <tr key={entity.id}>
-                    {Object.keys(entity).map((key) => {
-                        var colIndex = this.columnNames.indexOf(key)
-                        var hasCallback = false;
-                        var _columnObj = this.props.columns[colIndex];// i used the same colIndex here because column names have the arrangement as props.columns
-                        if (_columnObj) {
-                            hasCallback = _columnObj.onClick ? true : false;
-                        }
-
-                        if (colIndex != '-1') {
-
-                            if (hasCallback == true) {
-                                return (
-                                    <td key={key} onClick={(entity) => _columnObj.onClick(entity)}>
-                                        {entity[key]}
-                                    </td>)
-                            } else {
-                                return (<td key={key}> {entity[key]} </td>)
-
-                            }
+                return <tr key={count}>
+                    {this.props.columns.map((col) => { //Loop through each column object
+                       
+                        if (col.onClick != undefined) { // has an onClick callback function
+                            return (<td onClick={(entity) => col.onClick(entity)}>
+                                {entity[col.id]}
+                            </td>)
+                        } else {
+                            return <td > {entity[col.id]}</td>
 
                         }
-                    }
-                    )}
+                    })}
 
-                    {this.props.actionRender ? (<td>{this.props.actionRender(entity)}</td>) : null}
+                    {this.props.actions ? (<td>{this.props.actions(entity)}</td>) : null}
+
                 </tr>
+
             })
         } else {
             return <tr>
@@ -197,7 +195,7 @@ class DataTable extends Component {
                                     Next
                 </button>
                             </li>
-                            <span style={{ marginTop: '8px' }}> &nbsp; <i>Displaying {this.state.entities.data.length} of {this.state.entities.total} entries.</i></span>
+                            <span style={{ marginTop: '8px' }}> &nbsp; <i> Showing {this.state.entities.data.length} of {this.state.entities.total} records.</i></span>
                         </ul>
                     </nav>
                 }
@@ -206,10 +204,10 @@ class DataTable extends Component {
     }
 }
 
-DataTable.propTypes={
-    url : PropTypes.string.isRequired,
-    columns : PropTypes.array.isRequired,
-    actionRender: PropTypes.func
+DataTable.propTypes = {
+    url: PropTypes.string.isRequired,
+    columns: PropTypes.array.isRequired,
+    actions: PropTypes.func
 }
-export default  DataTable
+export default DataTable
 
