@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import PropTypes from "prop-types";
-
+import { Button,TextField ,Icon} from "@material-ui/core";
+import './style.css';
 
 class DataTable extends Component {
     columnNames = [];
@@ -21,6 +22,7 @@ class DataTable extends Component {
 
         this.columnNames = props.columns.map(column => column.id);
         this.state = {
+            search_term: '',
             entities: {
                 data: [],
                 current_page: 1,
@@ -39,14 +41,13 @@ class DataTable extends Component {
     }
 
     fetchEntities() {
-        let fetchUrl = `${this.props.url}?page=${this.state.current_page}&column=${this.state.sorted_column}&order=${this.state.order}&per_page=${this.state.entities.per_page}`;
+        let fetchUrl = `${this.props.url}?term=${this.state.search_term}&page=${this.state.current_page}&column=${this.state.sorted_column}&order=${this.state.order}&per_page=${this.state.entities.per_page}`;
         axios.get(fetchUrl)
             .then(response => {
                 if (response.data.data == undefined) {
                     throw "Invalid response. Please make sure your response body contains a data key and is a laravel pagination object."
                 }
                 this.setState({ entities: response.data.data });
-                console.log("respsda", this.state);
             })
             .catch(e => {
                 console.error(e);
@@ -166,9 +167,31 @@ class DataTable extends Component {
         })
     }
 
+    searchField = ()=>{
+        return (
+            <form>
+                <div className="rldt-search-container">
+                    <input type='text' placeholder="enter search term"  onSubmit={this.searcButtonOnClick} onChange={this.searcFieldOnChange} />
+                    <button type="button" onClick={this.searcButtonOnClick}> Go </button>
+                </div> 
+            </form>
+        )
+    }
+    searcButtonOnClick = (e)=>{
+        this.fetchEntities();
+
+    }
+
+    searcFieldOnChange = (e)=>{
+        const value = e.target.value;
+        console.log("search field ", value);
+        this.setState({search_term: value});
+    }
+
     render() {
         return (
             <div className="data-table">
+                {this.searchField()}
                 <table className="table table-bordered">
                     <thead>
                         <tr>{this.tableHeads()}</tr>

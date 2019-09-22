@@ -38,7 +38,7 @@ A simple yet flexible react datatable library built to support laravel's paginat
     const dataSource = "htts://test.com/users" ;
 
     /*
-    A typical larvel paginal object will return the following.;
+    A typical laravel pagination object will return the following.;
      {
          "data":{
              "current_page":1,
@@ -83,8 +83,8 @@ A simple yet flexible react datatable library built to support laravel's paginat
 ```js
 
     const  actions = (rowItem)=>{
-            //your action script goes here;
-           return ( <a  href={`/user/${rowItem.user_id}`}> Views </a>)
+            //Below is just an example. You can decide to do whatever you want here.🤓
+           return ( <a  href={`/user/${rowItem.id}`}> Views </a>)
     }
 
     <Datatable url={dataSource} columns={columns} actions={actions} />
@@ -101,8 +101,9 @@ A simple yet flexible react datatable library built to support laravel's paginat
         {
             id: "user_id",
             label : "ID", 
-            onClick: (currentRowItem) => { 
-                    console.log(`User ${id} has been clicked `); 
+            onClick: (rowItem) => { 
+                    //This is just an example. You can decide to do whatever you want here.🤓
+                    console.log(`User ${rowItem.id} has been clicked `); 
                     }
         }
         ...
