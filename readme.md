@@ -115,8 +115,8 @@ A simple yet flexible react datatable library built to support laravel's paginat
 
 ##TODO
 
-- Add styling
-- Search fields
+- Add styling ✅
+- Search fields ✅
 - Bulk action
-- Edit
+- Editable cell
 - 
