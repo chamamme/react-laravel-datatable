@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import PropTypes from "prop-types";
-import { Button,TextField ,Icon} from "@material-ui/core";
 import './style.css';
 
 class DataTable extends Component {
@@ -128,9 +127,9 @@ class DataTable extends Component {
 
                 return <tr key={count}>
                     {this.props.columns.map((col) => { //Loop through each column object
-                       
+                
                         if (col.onClick != undefined) { // has an onClick callback function
-                            return (<td onClick={(entity) => col.onClick(entity)}>
+                            return (<td onClick={(e)=>{ return col.onClick(entity)}}>
                                 {entity[col.id]}
                             </td>)
                         } else {
