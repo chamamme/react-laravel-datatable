@@ -77,17 +77,18 @@ A simple yet flexible react datatable library built to support laravel's paginat
    This package gives you the flexibility to define your own callback functions on each cell as well as define you own action components or buttons.
 
 
-- ### Filter / Sorting
-        The component already sends a couple of parameters in the query string when making request to the api endpoint. You can leverage on them to filter and sort  results from the server side. A typical query string from this component will be ``` ?term=&page=1&column=&order=asc&per_page=5 ``` .
-    Param  | Description | Example 
-    ------------- | ------------- | ------------
-    term  | The search term entered in the search field | hello world
-    page  | Current page number | 1
-    column | Column for sorting | user_name
-    order | Sorting order | asc / desc
-    per_page | Number of records per page | 5
+### Filter & Sort
+The component already sends a couple of parameters in the query string when making request to the api endpoint. You can leverage on them to filter and sort  results from the server side. A typical query string from this component will be ``` ?term=&page=1&column=&order=asc&per_page=5 ``` .
+    
+Param  | Description | Example 
+------------- | ------------- | ------------
+term  | The search term entered in the search field | hello world
+page  | Current page number | 1
+column | Column for sorting | user_name
+order | Sorting order | asc / desc
+per_page | Number of records per page | 5
 
-- ### Action Buttons/Components
+### Action Buttons/Components
 
     Action buttons or UI components can be added by indicating an ` actions ` prop in the `Datatable`. This prop  takes a function and your functnion can contain any valid react code but in this case its preferred to use it for button actions 👨🏿‍🏫 . At the point of when this function is being called, the current row object in injected into it.
 
@@ -102,8 +103,8 @@ A simple yet flexible react datatable library built to support laravel's paginat
 
 ```
 
-- ### Onclick Event on cells
-    Maybe you might want to add a onClick event to records in a specific column (cell). You can easily do that by indicating an onClick property in the columns defination.
+### Onclick Event on cells
+    Maybe you want to add an onClick event to records in a specific column (cell). You can easily do that by indicating an onClick property in the columns defination.
 
 
 ```js
@@ -122,12 +123,12 @@ A simple yet flexible react datatable library built to support laravel's paginat
 
 ```
 
-
-
+## CONTRIBUTIONS
+   All contributions and pull requests are welcome. Incase of any issue or suggestions please dont hesitate to log it on [github](https://github.com/mastys100/react-laravel-datatable/issues) or send a mail to mastys100@gmail.com . 
+  
 ## TODOS
 
 - Add styling ✅
-- Search fields ✅
+- Search field ✅
 - Bulk action
 - Editable cell
-- 
