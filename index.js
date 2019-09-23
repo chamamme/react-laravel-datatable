@@ -2050,7 +2050,6 @@ function (_Component) {
 
     _defineProperty(_assertThisInitialized(_this), "searcFieldOnChange", function (e) {
       var value = e.target.value;
-      console.log("search field ", value);
 
       _this.setState({
         search_term: value
