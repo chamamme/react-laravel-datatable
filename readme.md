@@ -6,7 +6,7 @@ A simple yet flexible react datatable library built to support laravel's paginat
  > npm i react-laravel-datatable
 
 ## Usage
- Link for a [video tutorial](https://youtu.be/nodndqinTxc)
+
 1. First  import  package.
 
   ```js 
