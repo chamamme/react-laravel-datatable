@@ -68,21 +68,7 @@ table {
       left: 10px;
       top: 0;
     }
-    table tbody tr td:nth-child(1):before {
-      content: "Code";
-    }
-    table tbody tr td:nth-child(2):before {
-      content: "Stock";
-    }
-    table tbody tr td:nth-child(3):before {
-      content: "Cap";
-    }
-    table tbody tr td:nth-child(4):before {
-      content: "Inch";
-    }
-    table tbody tr td:nth-child(5):before {
-      content: "Box Type";
-    }
+    
   }
   body {
     font: 400 14px "Calibri", "Arial";
