@@ -1,4 +1,4 @@
-import {SET_PER_PAGE,FETCH_DATA,SET_PROPS_TO_STATE, SET_ORDER_COLUMN,INIT,SET_SEARCH_TERM} from './actions/types';
+import {SET_PER_PAGE,FETCH_DATA,SET_PROPS_TO_STATE, SET_ORDER_COLUMN,INIT,SET_SEARCH_TERM, SET_ERROR} from './actions/types';
 import {fetchEntities} from "./actions/index";
 
 const init = (state,action)=>{
@@ -23,6 +23,8 @@ const init = (state,action)=>{
             return {...state, per_page : action.payload}
         case SET_ORDER_COLUMN:
             return action.payload ? action.payload : state;
+        case SET_ERROR:
+            return {...state, error : action.payload};
         case FETCH_DATA:
            return   !Array.isArray(action.payload)  ?  { ...state, entities:action.payload} : state
         default:

@@ -74,8 +74,24 @@ A simple yet flexible react datatable library built to support laravel's paginat
 ```
 
 ## Advanced Options
-   This package gives you the flexibility to define your own callback functions on each cell as well as define you own action components or buttons.
+   The package gives you the flexibility to define your own callback functions on each cell as well as define you own action components or buttons.
 
+### Headers
+  The package accepts a ``headers`` prop.  This can be used in situations where there is a need to modify request headers. Eg. setting Authorization token,Content type, etc.
+
+  ```js
+
+  const myToken = "ATOKENSTRINGHERE";
+
+   const myHeaders =  {
+        "Authorization" : `Bearer ${myToken}`,
+        "Content-Type" : 'application/json',
+    }
+
+
+    <Datatable ... headers={myHeaders} />
+    
+  ```
 
 ### Filter & Sort
 The component already sends a couple of parameters in the query string when making request to the api endpoint. You can leverage on them to filter and sort  results from the server side. A typical query string from this component will be ``` ?term=&page=1&column=&order=asc&per_page=5 ``` .

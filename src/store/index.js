@@ -19,6 +19,7 @@ const initialState = {
     sorted_column: '',
     offset: 4,
     order: 'asc',
+    error:false,
 
 };
 

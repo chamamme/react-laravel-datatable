@@ -1,6 +1,6 @@
 {
   "name": "react-laravel-datatable",
-  "version": "0.1.9",
+  "version": "0.1.10",
   "description": "A simple but flexible react datatable library built to support Laravel's pagination out of the box.",
   "main": "index.js",
   "scripts": {
@@ -39,7 +39,7 @@
     "@babel/core": "^7.1.6",
     "@babel/plugin-proposal-class-properties": "^7.1.0",
     "@babel/preset-env": "^7.1.6",
-    "axios": "0.19.0",
+    "axios": "^0.24.0",
     "babel-core": "^7.0.0-bridge.0",
     "babel-jest": "^23.6.0",
     "babel-loader": "^7.1.4",
