@@ -140,7 +140,7 @@ per_page | Number of records per page | 5
 ```
 
 ## CONTRIBUTIONS
-   All contributions and pull requests are welcome. Incase of any issue or suggestions please dont hesitate to log it on [github](https://github.com/mastys100/react-laravel-datatable/issues) or send a mail to mastys100@gmail.com . 
+   All contributions and pull requests are welcome. Incase of any issue or suggestions please dont hesitate to log it on [github](https://github.com/mastys100/react-laravel-datatable/issues). 
   
 ## TODOS
 
